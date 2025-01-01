@@ -1,0 +1,27 @@
+name: Local CI/CD Demonstration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the Repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Build Docker Image
+      - name: Build Docker Image
+        run: |
+          docker build -t multi-html-app:latest .
+
+      # Step 3: Run the Docker Container Locally
+      - name: Run Docker Container Locally
+        run: |
+          docker stop multi-html-app || true
+          docker rm multi-html-app || true
+          docker run -d -p 8080:80 --name multi-html-app multi-html-app:latest
