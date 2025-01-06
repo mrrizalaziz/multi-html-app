@@ -1,0 +1,22 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Build Docker image
+      run: docker build -t my-app .
+
+test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Run tests
+      run: echo "Run your test scripts here"
+
+deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Deploy to EC2
+      run: echo "Deploy script here"
